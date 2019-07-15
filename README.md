@@ -30,26 +30,24 @@ some exercise it rest api and springboot
 
 3. After starting in ide method main() in TransformerApplication.java such are examples of url / routes:
 
-GET
-http://localhost:8080/bots/
+    GET
+    http://localhost:8080/bots/
   ---
   shows all available transformers
   ***
 
-GET
-http://localhost:8080/bots/3
+    GET
+    http://localhost:8080/bots/3
    ---
   information about record with id=3
   ***
 
-POST
-http://localhost:8080/bots/create
-  ---
+    POST
+    http://localhost:8080/bots/create
   create new record
-  ---
   example of running from command line with curl:
-        curl -kiX POST -H "Content-Type: application/json" -d @new_transformer.json  http://localhost:8080/bots/create
   ---
+        curl -kiX POST -H "Content-Type: application/json" -d @new_transformer.json  http://localhost:8080/bots/create
   sample contents of file new_transformer.json
   ---
     {
@@ -66,8 +64,8 @@ http://localhost:8080/bots/create
     }
 
   ***
-PUT
-http://localhost:8080/bots/16
+    PUT
+    http://localhost:8080/bots/16
   update existing record
   ---
   example of running from command line with curl:
@@ -92,8 +90,8 @@ http://localhost:8080/bots/16
   notice that "id" should be present and be id of one of existing records, else api will rather create new one instead updating...
   ***
 
-DELETE
-http://localhost:8080/bots/16
+    DELETE
+    http://localhost:8080/bots/16
   example of running from command line with curl:
   ---
         curl -kiX DELETE -H "Content-Type: application/json"  http://localhost:8080/bots/16
