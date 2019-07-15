@@ -49,7 +49,7 @@ some exercise it rest api and springboot
   create new record
 
   ---
-        curl -kiX POST -H "Content-Type: application/json" -d @new_transformer.json  http://localhost:8080/bots/create
+    curl -kiX POST -H "Content-Type: application/json" -d @new_transformer.json  http://localhost:8080/bots/create
   sample contents of file new_transformer.json
   ---
     {
@@ -70,8 +70,7 @@ some exercise it rest api and springboot
     http://localhost:8080/bots/16
   update existing record
   ---
-        curl -kiX PUT -H "Content-Type: application/json" -d @update_transformer.json  http://localhost:8080/bots/16
-
+    curl -kiX PUT -H "Content-Type: application/json" -d @update_transformer.json  http://localhost:8080/bots/16
   sample contents of file update_transformer.json
   ---
     {
