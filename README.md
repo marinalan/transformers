@@ -75,6 +75,7 @@ some exercise it rest api and springboot
   ---
     curl -kiX PUT -H "Content-Type: application/json" -d @update_transformer.json  http://localhost:8080/bots/16
   sample contents of file update_transformer.json
+
   ---
     {
       "id": 16,
