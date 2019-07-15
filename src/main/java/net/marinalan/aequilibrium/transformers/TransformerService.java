@@ -9,5 +9,7 @@ public interface TransformerService {
   public Transformer update(Integer id, Transformer t);
   public Transformer deleteById(Integer id);
   public List<Transformer> geByMultipleIds(List<Integer> ids);
+  public List<Transformer> getRankedAutobotsWithIds(List<Integer> ids);
+  public List<Transformer> getRankedDecepticonsWithIds(List<Integer> ids);
   public MatchResult determineWinner(List<Integer> ids);
 }

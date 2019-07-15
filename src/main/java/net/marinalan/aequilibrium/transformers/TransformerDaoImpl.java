@@ -34,6 +34,20 @@ public class TransformerDaoImpl  implements TransformerDao{
   }
 
   @Override
+  public List<Transformer> getRankedAutobotsWithIds(List<Integer> ids) {
+    Query query = em.createNamedQuery("get_ranked_autobots_by_ids");
+    query.setParameter("ids", ids);
+    return query.getResultList();
+  }
+
+  @Override
+  public List<Transformer> getRankedDecepticonsWithIds(List<Integer> ids) {
+    Query query = em.createNamedQuery("get_ranked_decepticons_by_id");
+    query.setParameter("ids", ids);
+    return query.getResultList();
+  }
+
+  @Override
   public Transformer findById(Integer id) {
     return em.find(Transformer.class, id);
   }

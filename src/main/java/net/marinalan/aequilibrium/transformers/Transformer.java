@@ -9,8 +9,12 @@ import java.io.Serializable;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @NamedQueries(value = {
-        @NamedQuery(name="get_all_transformers", query="SELECT t FROM Transformer t"),
-        @NamedQuery(name="get_list_by_ids", query="SELECT t FROM Transformer t WHERE t.id in :ids")
+  @NamedQuery(name="get_all_transformers", query="SELECT t FROM Transformer t"),
+  @NamedQuery(name="get_list_by_ids", query="SELECT t FROM Transformer t WHERE t.id in :ids"),
+  @NamedQuery(name="get_ranked_autobots_by_ids",
+    query="SELECT t FROM Transformer t WHERE t.id in :ids AND t.type=net.marinalan.aequilibrium.transformers.TransformerType.Autobot ORDER By rank, id"),
+  @NamedQuery(name="get_ranked_decepticons_by_id",
+    query="SELECT t FROM Transformer t WHERE t.id in :ids AND t.type=net.marinalan.aequilibrium.transformers.TransformerType.Decepticon ORDER BY rank, id")
 })
 @Getter @Setter @NoArgsConstructor @EqualsAndHashCode
 public class Transformer implements Serializable {
@@ -65,5 +69,43 @@ public class Transformer implements Serializable {
             Integer.toString(courage), Integer.toString(firepower), Integer.toString(skill)};
     String parts[] = {name, type.shortVal(), String.join(",", stats)};
     return String.join(", ", parts);
+  }
+
+  /* may be similar to compareTo, but for the sake to determine match outcome between autobot and decepticon
+   * 1 - winner,  oppenent is loser
+   * -1 - loser, opponent is winner
+   * 0 - tie, both die
+   * -2 - "Optimus Prime|Predaking" meets "Optimus Prime|Predaking", all competitors destroyed
+   */
+  public int matchOutcome(Transformer opponent) {
+    if (type.equals(opponent.getType())) {
+      throw new IllegalArgumentException("Fight with not of your own kindyour own kind is forbidden!");
+    }
+    if(name.equals("Optimus Prime") || name.equals("Predaking")) {
+      if(opponent.getName().equals("Optimus Prime") || opponent.getName().equals("Predaking")) {
+        return -2; // all annihilated
+      } else {
+        return 1; //wins
+      }
+    }
+    if(opponent.getName().equals("Optimus Prime") || opponent.getName().equals("Predaking")) {
+      return -1; // loses
+    }
+    if( (opponent.getCourage() - courage >= 4) || (opponent.getStrength() - strength >= 3) ) {
+      return -1; //loses
+    } else if( (courage - opponent.getCourage() >= 4) || (strength - opponent.getStrength() >= 3) ) {
+      return 1; //wins
+    }
+    if(skill - opponent.getSkill() >= 3) {
+      return 1; // wins
+    } else if(opponent.getSkill() - skill >= 3) {
+      return -1; //loses
+    }
+    if (getOverallRating() > opponent.getOverallRating()) {
+      return 1; //wins
+    } else if ( opponent.getOverallRating() > getOverallRating() ) {
+      return -1; //loses
+    }
+    return 0;
   }
 }

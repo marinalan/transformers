@@ -150,4 +150,138 @@ public class TransformersApplicationTests {
 		assertEquals("Predaking, D, 4,4,4,4,4,4,4,4", bots.get(2).toString());
 		assertEquals("Bender, D, 8,5,7,6,5,3,8,5", bots.get(3).toString());
 	}
+
+	@Test
+	public void checkRankedAutobotsWithIds() {
+		Transformer t1 = transformerService.create(new Transformer("Soundwave", TransformerType.Decepticon, 8,9,2,6,7,5,6,10));
+		Transformer t2 = transformerService.create(new Transformer("Bluestreak", TransformerType.Autobot, 6,6,7,9,1,2,9,7));
+		Transformer t3 = transformerService.create(new Transformer("Hubcap", TransformerType.Autobot, 4,4,4,4,1,4,4,4));
+		Transformer t4 = transformerService.create(new Transformer("Optimus Prime", TransformerType.Autobot, 6,7,8,7,2,5,4,3));
+		Transformer t5 = transformerService.create(new Transformer("Predaking", TransformerType.Decepticon, 4,4,4,4,4,4,4,4));
+		Transformer t6 = transformerService.create(new Transformer("Bender", TransformerType.Decepticon, 8,5,7,6,5,3,8,5));
+
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(t1.getId());
+		ids.add(t2.getId());
+		ids.add(t3.getId());
+		ids.add(t4.getId());
+		ids.add(t6.getId());
+
+		List<Transformer> bots = transformerService.getRankedAutobotsWithIds(ids);
+		assertEquals(3, bots.size());
+
+		assertEquals("Bluestreak, A, 6,6,7,9,1,2,9,7", bots.get(0).toString());
+		assertEquals("Hubcap, A, 4,4,4,4,1,4,4,4", bots.get(1).toString());
+		assertEquals("Optimus Prime, A, 6,7,8,7,2,5,4,3", bots.get(2).toString());
+	}
+
+	@Test
+	public void checkRankedDecepticonsWithIds() {
+		Transformer t1 = transformerService.create(new Transformer("Soundwave", TransformerType.Decepticon, 8,9,2,6,7,5,6,10));
+		Transformer t2 = transformerService.create(new Transformer("Bluestreak", TransformerType.Autobot, 6,6,7,9,1,2,9,7));
+		Transformer t3 = transformerService.create(new Transformer("Hubcap", TransformerType.Autobot, 4,4,4,4,1,4,4,4));
+		Transformer t4 = transformerService.create(new Transformer("Optimus Prime", TransformerType.Autobot, 6,7,8,7,2,5,4,3));
+		Transformer t5 = transformerService.create(new Transformer("Predaking", TransformerType.Decepticon, 4,4,4,4,4,4,4,4));
+		Transformer t6 = transformerService.create(new Transformer("Bender", TransformerType.Decepticon, 8,5,7,6,5,3,8,5));
+
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(t1.getId());
+		ids.add(t2.getId());
+		ids.add(t3.getId());
+		ids.add(t4.getId());
+		ids.add(t6.getId());
+
+		List<Transformer> bots = transformerService.getRankedDecepticonsWithIds(ids);
+		assertEquals(2, bots.size());
+
+		assertEquals("Bender, D, 8,5,7,6,5,3,8,5", bots.get(0).toString());
+		assertEquals("Soundwave, D, 8,9,2,6,7,5,6,10", bots.get(1).toString());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldBeExceptionWhenOfSamweKind(){
+		Transformer t1 = new Transformer("Bluestreak", TransformerType.Autobot, 6,6,7,9,5,2,9,7);
+		Transformer t2 = new Transformer("Optimus Prime", TransformerType.Autobot, 6,6,7,9,5,2,9,7);
+
+		t1.matchOutcome(t2);
+	}
+
+	@Test
+	public void matchOutcomeBetweenTwoBots() {
+		Transformer t1 = new Transformer("Bluestreak", TransformerType.Decepticon, 6,6,7,9,5,2,9,7);
+		Transformer t2 = new Transformer("Optimus Prime", TransformerType.Autobot, 6,6,7,9,5,2,9,7);
+
+		System.out.println("One is special");
+		System.out.println(t1.toString()+" vs "+t2.toString());
+		assertEquals(1, t2.matchOutcome((t1)));
+		assertEquals(-1, t1.matchOutcome((t2)));
+
+		System.out.println("Both special");
+		t1.setName("Predaking");
+		System.out.println(t1.toString()+" vs "+t2.toString());
+		assertEquals(-2, t1.matchOutcome(t2));
+		assertEquals(-2, t2.matchOutcome(t1));
+
+		System.out.println("One is 4 or more points in courage");
+		t1.setName("Soundwave");
+		t2.setName("Strongest");
+		t1.setCourage(6);
+		System.out.println(t1.toString()+" vs "+t2.toString());
+		assertEquals(1, t1.matchOutcome((t2)));
+		assertEquals(-1, t2.matchOutcome((t1)));
+
+		System.out.println("One is 3 or more points in strength");
+		t1.setCourage(t2.getCourage());
+		t1.setStrength(9);
+		System.out.println(t1.toString()+" vs "+t2.toString());
+		assertEquals(1, t1.matchOutcome((t2)));
+		assertEquals(-1, t2.matchOutcome((t1)));
+
+		System.out.println("One is 3 or more points in skill");
+		t1.setStrength(t2.getStrength());
+		t1.setSkill(10);
+		System.out.println(t1.toString()+" vs "+t2.toString());
+		assertEquals(1, t1.matchOutcome((t2)));
+		assertEquals(-1, t2.matchOutcome((t1)));
+
+		t1.setSkill(t2.getSkill());
+		t1.setIntelligence(7);
+		t1.setSpeed(8);
+		System.out.println("Compare by overall rating");
+		System.out.println(t1.toString()+" vs "+t2.toString());
+		assertEquals(1, t1.matchOutcome((t2)));
+		assertEquals(-1, t2.matchOutcome((t1)));
+
+		t1.setIntelligence(t2.getIntelligence());
+		t1.setSpeed(t2.getSpeed());
+		System.out.println("Should be a tie");
+		System.out.println(t1.toString()+" vs "+t2.toString());
+		assertEquals(0, t1.matchOutcome((t2)));
+		assertEquals(0, t2.matchOutcome((t1)));
+	}
+
+	@Test
+	public void determineWinningTeam() {
+		Transformer t1 = transformerService.create(new Transformer("Soundwave", TransformerType.Decepticon, 8,9,2,6,7,5,6,10));
+		Transformer t2 = transformerService.create(new Transformer("Bluestreak", TransformerType.Autobot, 6,6,7,9,1,2,9,7));
+		Transformer t3 = transformerService.create(new Transformer("Hubcap", TransformerType.Autobot, 4,4,4,4,2,4,4,4));
+		Transformer t4 = transformerService.create(new Transformer("Optimus Prime", TransformerType.Autobot, 6,7,8,7,2,5,4,3));
+		Transformer t5 = transformerService.create(new Transformer("Predaking", TransformerType.Decepticon, 4,4,4,4,4,4,4,4));
+		Transformer t6 = transformerService.create(new Transformer("Bender", TransformerType.Decepticon, 8,5,7,6,5,3,8,5));
+
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(t1.getId());
+		ids.add(t2.getId());
+		ids.add(t3.getId());
+
+		MatchResult mr = transformerService.determineWinner(ids);
+		assertEquals(1, mr.getNumBattles());
+		assertEquals(t1, mr.getWinner());
+
+		ArrayList<Transformer> survivingLosers = mr.getSurvivingLosers();
+		System.out.println(survivingLosers);
+		assertEquals(t3.toString(), survivingLosers.get(0).toString());
+
+		System.out.println(mr);
+	}
 }
