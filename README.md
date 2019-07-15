@@ -6,11 +6,15 @@ some exercise it rest api and springboot
    ...............................
 
     CREATE DATABASE IF NOT EXISTS transformers CHARACTER SET utf8;
+
     create user 'user1'@'%' identified by 'password';
+
     grant all on transformers.* to 'user1'@'%';
 
     CREATE DATABASE IF NOT EXISTS test_transformers CHARACTER SET utf8;
+
     grant all on test_transformers.* to 'user1'@'%';
+
     flush privileges;
 --------------------------------------------------------
 
@@ -43,12 +47,11 @@ some exercise it rest api and springboot
     POST
     http://localhost:8080/bots/create
   create new record
-
-  example of running from command line with curl:
+    example of running from command line with curl:
   ---
         curl -kiX POST -H "Content-Type: application/json" -d @new_transformer.json  http://localhost:8080/bots/create
 
-  sample contents of file new_transformer.json
+    sample contents of file new_transformer.json
   ---
     {
       "name": "Terminator",
@@ -67,12 +70,11 @@ some exercise it rest api and springboot
     PUT
     http://localhost:8080/bots/16
   update existing record
-
-  example of running from command line with curl:
+    example of running from command line with curl:
   ---
         curl -kiX PUT -H "Content-Type: application/json" -d @update_transformer.json  http://localhost:8080/bots/16
 
-  sample contents of file update_transformer.json
+    sample contents of file update_transformer.json
   ---
     {
       "id": 16,
@@ -92,6 +94,6 @@ some exercise it rest api and springboot
 
     DELETE
     http://localhost:8080/bots/16
-  example of running from command line with curl:
+    example of running from command line with curl:
   ---
         curl -kiX DELETE -H "Content-Type: application/json"  http://localhost:8080/bots/16
