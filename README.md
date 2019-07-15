@@ -85,5 +85,3 @@ DELETE
 http://localhost:8080/bots/16
   example of running from command line with curl:
   curl -kiX DELETE -H "Content-Type: application/json"  http://localhost:8080/bots/16
-
-
