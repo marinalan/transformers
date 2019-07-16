@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin( origins = "*" )
 @RequestMapping(value="/bots")
 public class TransformerController {
 
@@ -18,12 +20,20 @@ public class TransformerController {
   TransformerService transformerService;
 
   @GetMapping(value="/", headers="Accept=application/json")
-  public List<Transformer> getAll(){
+  @CrossOrigin( origins = "*" )
+  public ResponseEntity<?> getAll(){
     List<Transformer> bots = transformerService.getAll();
-    return bots;
+    return ResponseEntity.ok(bots);
   }
 
-  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value="/detertmine-winner", headers="Accept=application/json")
+  @CrossOrigin( origins = "*" )
+  public ResponseEntity<MatchResult> determineWinner(@RequestBody ArrayList<Integer> ids) {
+    return ResponseEntity.ok(transformerService.determineWinner(ids));
+  }
+
+  @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @CrossOrigin( origins = "*" )
   public ResponseEntity<Transformer> getTransformerById(@PathVariable("id") int id) {
     Transformer t = transformerService.findById(id);
     if (t == null) {
@@ -33,6 +43,7 @@ public class TransformerController {
   }
 
   @PostMapping(value="/create",headers="Accept=application/json")
+  @CrossOrigin( origins = "*" )
   public ResponseEntity<Void> createUser(@RequestBody Transformer t, UriComponentsBuilder ucBuilder){
       System.out.println("Creating Transformer "+t);
       t = transformerService.create(t);
@@ -41,7 +52,8 @@ public class TransformerController {
       return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
   }
 
-    @DeleteMapping(value="/{id}", headers ="Accept=application/json")
+    @DeleteMapping(value="/delete/{id}", headers ="Accept=application/json")
+    @CrossOrigin( origins = "*" )
     public ResponseEntity<Transformer> deleteUser(@PathVariable("id") int id){
         Transformer t = transformerService.deleteById(id);
         if (t == null) {
@@ -50,7 +62,8 @@ public class TransformerController {
         return new ResponseEntity<Transformer>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value="/{id}", headers="Accept=application/json")
+    @PutMapping(value="/update/{id}", headers="Accept=application/json")
+    @CrossOrigin( origins = "*" )
     public ResponseEntity<Transformer> updateBot(@PathVariable("id") int id, @RequestBody Transformer currentBot){
         Transformer tExisting = transformerService.findById(id);
         if (tExisting == null) {

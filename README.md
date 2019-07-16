@@ -40,7 +40,8 @@ some exercise it rest api and springboot
   ***
 
     GET
-    http://localhost:8080/bots/3
+    http://localhost:8080/bots/get/3
+
   information about record with id=3
 
   ***
@@ -69,11 +70,11 @@ some exercise it rest api and springboot
 
   ***
     PUT
-    http://localhost:8080/bots/16
+    http://localhost:8080/bots/update/16
   update existing record
 
   ---
-    curl -kiX PUT -H "Content-Type: application/json" -d @update_transformer.json  http://localhost:8080/bots/16
+    curl -kiX PUT -H "Content-Type: application/json" -d @update_transformer.json  http://localhost:8080/bots/update/16
   sample contents of file update_transformer.json
 
   ---
@@ -95,8 +96,20 @@ some exercise it rest api and springboot
   ***
 
     DELETE
-    http://localhost:8080/bots/16
+    http://localhost:8080/bots/delete/16
   delete existing record
 
   ---
-    curl -kiX DELETE -H "Content-Type: application/json"  http://localhost:8080/bots/16
+    curl -kiX DELETE -H "Content-Type: application/json"  http://localhost:8080/bots/delete/16
+
+  ***
+    PUT
+    http://localhost:8080/bots/detertmine-winner
+  determine winner
+
+  ---
+    curl -kiX PUT -H "Content-Type: application/json" -d @update_transformer.json  http://localhost:8080/bots/detertmine-winner
+  sample contents of file update_transformer.json
+
+  ---
+    [3,4,5]
