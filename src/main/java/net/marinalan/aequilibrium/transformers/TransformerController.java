@@ -1,7 +1,6 @@
 package net.marinalan.aequilibrium.transformers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +43,12 @@ public class TransformerController {
 
   @PostMapping(value="/create",headers="Accept=application/json")
   @CrossOrigin( origins = "*" )
-  public ResponseEntity<Void> createUser(@RequestBody Transformer t, UriComponentsBuilder ucBuilder){
+  public ResponseEntity<Transformer> createTransformer(@RequestBody Transformer t, UriComponentsBuilder ucBuilder){
       System.out.println("Creating Transformer "+t);
       t = transformerService.create(t);
-      HttpHeaders headers = new HttpHeaders();
-      headers.setLocation(ucBuilder.path("/bots/{id}").buildAndExpand(t.getId()).toUri());
-      return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+      //HttpHeaders headers = new HttpHeaders();
+      //headers.setLocation(ucBuilder.path("/bots/{id}").buildAndExpand(t.getId()).toUri());
+      return new ResponseEntity<Transformer>(t, HttpStatus.CREATED);
   }
 
     @DeleteMapping(value="/delete/{id}", headers ="Accept=application/json")
