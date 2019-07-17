@@ -108,8 +108,6 @@ some exercise it rest api and springboot
   determine winner
 
   ---
-    curl -kiX PUT -H "Content-Type: application/json" -d @update_transformer.json  http://localhost:8080/bots/detertmine-winner
-  sample contents of file update_transformer.json
-
-  ---
+    curl -kiX POST -H "Content-Type: application/json" -d @ids.json  http://localhost:8080/bots/detertmine-winner
+  sample contents for ids.json
     [3,4,5]
