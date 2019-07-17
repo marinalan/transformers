@@ -110,4 +110,5 @@ some exercise it rest api and springboot
   ---
     curl -kiX POST -H "Content-Type: application/json" -d @ids.json  http://localhost:8080/bots/detertmine-winner
   sample contents for ids.json
+
     [3,4,5]
