@@ -9,6 +9,11 @@ public class MatchResult {
   private Transformer winner;
   private ArrayList<Transformer> survivingLosers;
 
+
+  public String getPresentation(){
+    return toString();
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

@@ -8,15 +8,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TransformersApplication implements CommandLineRunner {
 
-	@Autowired
-	TransformerDaoImpl transformerDao;
+  @Autowired
+  TransformerDaoImpl transformerDao;
 
-	public static void main(String[] args) {
-		SpringApplication.run(TransformersApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(TransformersApplication.class, args);
+  }
 
-	@Override
-	public void run(String... args) throws Exception {
-		//transformerDao.playWithEntityManager();
-	}
+  @Override
+  public void run(String... args) throws Exception {
+    //transformerDao.playWithEntityManager();
+  }
 }
