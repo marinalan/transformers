@@ -103,7 +103,7 @@ some exercise it rest api and springboot
     curl -kiX DELETE -H "Content-Type: application/json"  http://localhost:8080/bots/delete/16
 
   ***
-    PUT
+    POST
     http://localhost:8080/bots/detertmine-winner
   determine winner
 
