@@ -22,7 +22,8 @@ public class Transformer implements Serializable {
   private static final long serialVersionUID = 8619896311396348269L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  //@GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   private String name;

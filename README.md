@@ -1,6 +1,9 @@
 # transformers
 some exercise it rest api and springboot
 
+Frontend code is in
+https://github.com/hfridland/transformersClient
+
 1. Create two databases in mysql for development and test.
    Examples of script to create database in mysql:
    ...............................
@@ -113,5 +116,11 @@ some exercise it rest api and springboot
 
     [3,4,5]
 
-Frontend code is in
-https://github.com/hfridland/transformersClient
+4. If to use postgresql:
+    sudo su - postgres
+    createuser -d aequilibrium
+    createdb transformers -O aequilibrium
+    createdb test_transformers -O aequilibrium
+
+    psql transformers
+    ALTER USER aequilibrium WITH password 'some_password';
