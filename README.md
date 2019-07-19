@@ -118,9 +118,13 @@ https://github.com/hfridland/transformersClient
 
 4. If to use postgresql:
     sudo su - postgres
+
     createuser -d aequilibrium
+
     createdb transformers -O aequilibrium
+
     createdb test_transformers -O aequilibrium
 
     psql transformers
+
     ALTER USER aequilibrium WITH password 'some_password';
