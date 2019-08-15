@@ -1,5 +1,5 @@
 # thtransformers
-some exercise with REST ijson api and Springboot
+some exercise with REST json api and Springboot
 Frontend code is in
 https://github.com/hfridland/transformersClient
 
