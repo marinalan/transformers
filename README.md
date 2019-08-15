@@ -22,7 +22,7 @@ https://github.com/hfridland/transformersClient
 --------------------------------------------------------
 
 2. Credentials for development database will be in
-       src/main/resources/application.properties
+       src/main/resources/application.properties ,
    for running junit tests in
        src/test/resources/application.properties
 
