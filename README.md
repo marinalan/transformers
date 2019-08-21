@@ -4,6 +4,9 @@ some exercise with REST json api and Springboot
 Frontend code is in
 https://github.com/hfridland/transformersClient
 
+Heroku deployment:
+https://transformers-marina.herokuapp.com/
+
 1. Create two databases in mysql for development and test.
    Examples of script to create database in mysql:
    ...............................
